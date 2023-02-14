@@ -1,0 +1,20 @@
+http:
+  routers:
+    httpbin-router:
+      entryPoints:
+        - web
+      rule: Host(`localhost`)
+      # rule: HostRegexp(`{name:.*}`)
+      # middlewares:
+      #   - allowed-sources
+      service: httpbin-service
+  # middlewares:
+  #   allowed-sources:
+  #     ipWhiteList:
+  #       sourceRange:
+  #         - "127.0.0.1/32"
+  services:
+    httpbin-service:
+      loadBalancer:
+        servers:
+          - url: http://httpbin-service/

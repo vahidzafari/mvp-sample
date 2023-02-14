@@ -1,1 +1,24 @@
-version: '3'
+version: "3.8"
+
+services:
+  reverse-proxy:
+    container_name: traefik
+    image: traefik
+    ports:
+      - "80:80"
+      - "8080:8080"
+    networks:
+      external-network:
+        aliases: []
+    volumes:
+      - ${PWD}/reverse-proxy/static-config.yml:/etc/traefik/traefik.yml:ro
+      - ${PWD}/reverse-proxy/dynamic-config/:/etc/traefik/dynamic-config/
+      - ${PWD}/reverse-proxy/log/:/log/
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  external-network:
+    external: true
+    name: mvp-external-network
+  internal-network:
+    name: mvp-internal-network
