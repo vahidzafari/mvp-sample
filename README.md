@@ -13,7 +13,15 @@ First, run the development server:
 ```bash
 docker-compose up --build -d
 ```
-We serve Traefik Panel on port 8080, But be careful that we serve frontend on port 80, So if port 80 is reserved in your system you should map another port for your Traefik service.
+We serve Traefik Panel on port 8080, But be careful that we serve frontend on port 80, So if port 80 is reserved in your system you should map another port for your Traefik service in the docker-compose.yml file.
+```yml
+reverse-proxy:
+  container_name: traefik
+  image: traefik
+  ports:
+    - "<another port>:80"
+    - "8080:8080"
+```
 - Check out Frontend [http://localhost](http://localhost).
 - Check out Traefik Panel [http://localhost:8080/](http://localhost:8080/) for more information.
 
