@@ -2,7 +2,7 @@
 
 This project show you how to start an MVP application with open source libraries and frameworks. This project show you how to start an MVP application with open source libraries and frameworks.
 
-![Diagram](./microservices.drawio.svg)
+![Diagram](./diagram.drawio.svg)
 
 <a href="https://app.diagrams.net/#Hvahidzafari%2Fmvp-sample%2Fmain%2Fdiagram.drawio" target="_blank">Edit in diagrams.net</a>
 
