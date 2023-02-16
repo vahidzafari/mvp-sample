@@ -13,9 +13,9 @@ First, run the development server:
 ```bash
 docker-compose up --build -d
 ```
-
-Check out Frontend [http://localhost](http://localhost).
-Check out Traefik Panel [http://localhost:8080/](http://localhost:8080/) for more information.
+We serve Traefik Panel on port 8080, But be careful that we serve frontend on port 80, So if port 80 is reserved in your system you should map another port for your Traefik service.
+- Check out Frontend [http://localhost](http://localhost).
+- Check out Traefik Panel [http://localhost:8080/](http://localhost:8080/) for more information.
 
 ## Wiki
 For more information you can use [Wiki](https://github.com/vahidzafari/mvp-sample/wiki) link.
