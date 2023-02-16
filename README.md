@@ -18,4 +18,4 @@ Check out Frontend [http://localhost](http://localhost).
 Check out Traefik Panel [http://localhost:8080/](http://localhost:8080/) for more information.
 
 ## Wiki
-For more information you cant use [Wiki](https://github.com/vahidzafari/mvp-sample/wiki) link.
+For more information you can use [Wiki](https://github.com/vahidzafari/mvp-sample/wiki) link.
