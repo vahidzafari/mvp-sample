@@ -17,8 +17,5 @@ docker-compose up --build -d
 Check out Frontend [http://localhost](http://localhost).
 Check out Traefik Panel [http://localhost:8080/](http://localhost:8080/) for more information.
 
-## Reverse Proxy (Traefik)
-
-## Backend (Nest.js)
-
-## Frontend (Next.js)
+## Wiki
+For more information you cant use [Wiki](https://github.com/vahidzafari/mvp-sample/wiki) link.
