@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  frontend-service:
+    container_name: frontend-service
+    build:
+      context: ./frontend-nextjs
+      dockerfile: Dockerfile
+    networks:
+      - internal-network
+    ports:
+      - '3000:3000'
   reverse-proxy:
     container_name: traefik
     image: traefik
@@ -8,17 +17,16 @@ services:
       - "80:80"
       - "8080:8080"
     networks:
-      external-network:
-        aliases: []
+      - external-network
+      - internal-network
     volumes:
       - ${PWD}/reverse-proxy/static-config.yml:/etc/traefik/traefik.yml:ro
       - ${PWD}/reverse-proxy/dynamic-config/:/etc/traefik/dynamic-config/
-      - ${PWD}/reverse-proxy/log/:/log/
+      # - ${PWD}/reverse-proxy/log/:/log/
       - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   external-network:
-    external: true
     name: mvp-external-network
   internal-network:
     name: mvp-internal-network

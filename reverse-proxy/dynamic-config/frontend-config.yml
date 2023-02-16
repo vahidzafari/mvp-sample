@@ -1,20 +1,20 @@
 http:
   routers:
-    httpbin-router:
+    frontend-router:
       entryPoints:
         - web
       rule: Host(`localhost`)
       # rule: HostRegexp(`{name:.*}`)
       # middlewares:
       #   - allowed-sources
-      service: httpbin-service
+      service: frontend-service
   # middlewares:
   #   allowed-sources:
   #     ipWhiteList:
   #       sourceRange:
   #         - "127.0.0.1/32"
   services:
-    httpbin-service:
+    frontend-service:
       loadBalancer:
         servers:
-          - url: http://httpbin-service/
+          - url: http://frontend-service:3000/

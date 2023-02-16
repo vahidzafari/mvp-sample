@@ -10,40 +10,39 @@ providers:
   file:
     directory: /etc/traefik/dynamic-config
     watch: true
+# log:
+#   level: INFO
+#   filePath: log/traefik.log
+#   format: json
 
-log:
-  level: INFO
-  filePath: log/traefik.log
-  format: json
+# accessLog:
+#   filePath: log/access.log
+#   format: json
+#   bufferingSize: 50
+#   fields:
+#     defaultMode: keep
+#     names:
+#       ClientUsername: drop
+#     headers:
+#       defaultMode: keep
+#       names:
+#         User-Agent: redact
+#         Authorization: drop
+#         Content-Type: keep
+#   filters:
+#     statusCodes:
+#       - 200
+#       - 300-302
+#     retryAttempts: true
+#     minDuration: 5s
 
-accessLog:
-  filePath: log/access.log
-  format: json
-  bufferingSize: 50
-  #   fields:
-  #     defaultMode: keep
-  #     names:
-  #       ClientUsername: drop
-  #     headers:
-  #       defaultMode: keep
-  #       names:
-  #         User-Agent: redact
-  #         Authorization: drop
-  #         Content-Type: keep
-  filters:
-    statusCodes:
-      - 200
-      - 300-302
-    retryAttempts: true
-    minDuration: 5s
+# tracing:
+#   zipkin:
+#     httpEndpoint: http://zipkin:9411/api/v2/spans
+#     id128Bit: true
+#     sameSpan: true
 
-tracing:
-  zipkin:
-    httpEndpoint: http://zipkin:9411/api/v2/spans
-    id128Bit: true
-    sameSpan: true
-
-metrics:
-  prometheus:
-    addEntryPointsLabels: true
-    addServicesLabels: true
+# metrics:
+#   prometheus:
+#     addEntryPointsLabels: true
+#     addServicesLabels: true
