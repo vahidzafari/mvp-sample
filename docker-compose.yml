@@ -7,9 +7,7 @@ services:
       context: ./frontend-nextjs
       dockerfile: Dockerfile
     networks:
-      - internal-network
-    ports:
-      - '3000:3000'
+      - ui
   reverse-proxy:
     container_name: traefik
     image: traefik
@@ -17,16 +15,80 @@ services:
       - "80:80"
       - "8080:8080"
     networks:
-      - external-network
-      - internal-network
+      - ui
+      - private
+      - monitoring
     volumes:
       - ${PWD}/reverse-proxy/static-config.yml:/etc/traefik/traefik.yml:ro
       - ${PWD}/reverse-proxy/dynamic-config/:/etc/traefik/dynamic-config/
-      # - ${PWD}/reverse-proxy/log/:/log/
       - /var/run/docker.sock:/var/run/docker.sock
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    user: "0"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data/:/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    restart: always
+    user: "0"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana_data/:/var/lib/grafana/
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=helloThere
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+    networks:
+      - monitoring
+
+  setup_grafana_datasource:
+    image: appropriate/curl
+    container_name: setup_grafana_datasource
+    depends_on:
+      - grafana
+    networks:
+      - monitoring
+    volumes:
+      - ./prometheus/create-datasource-and-dashboard.sh:/create.sh:ro
+    command: /create.sh
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - monitoring
+
+volumes:
+  grafana_data: {}
+  prometheus_data: {}
+  zipkin_data: {}
 
 networks:
-  external-network:
-    name: mvp-external-network
-  internal-network:
-    name: mvp-internal-network
+  monitoring:
+    driver: bridge
+  ui:
+    driver: bridge
+  private:
+    driver: bridge
