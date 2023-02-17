@@ -29,7 +29,7 @@ services:
     user: "0"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus_data/:/prometheus/
+      # - ./prometheus_data/:/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -51,8 +51,8 @@ services:
     user: "0"
     ports:
       - 3000:3000
-    volumes:
-      - ./grafana_data/:/var/lib/grafana/
+    # volumes:
+    #   - ./grafana_data/:/var/lib/grafana/
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=helloThere
       - GF_USERS_ALLOW_SIGN_UP=false
@@ -61,16 +61,16 @@ services:
     networks:
       - monitoring
 
-  setup_grafana_datasource:
-    image: appropriate/curl
-    container_name: setup_grafana_datasource
-    depends_on:
-      - grafana
-    networks:
-      - monitoring
-    volumes:
-      - ./prometheus/create-datasource-and-dashboard.sh:/create.sh:ro
-    command: /create.sh
+  # setup_grafana_datasource:
+  #   image: appropriate/curl
+  #   container_name: setup_grafana_datasource
+  #   depends_on:
+  #     - grafana
+  #   networks:
+  #     - monitoring
+  #   volumes:
+  #     - ./prometheus/create-datasource-and-dashboard.sh:/create.sh:ro
+  #   command: /create.sh
 
   zipkin:
     image: openzipkin/zipkin
@@ -80,10 +80,10 @@ services:
     networks:
       - monitoring
 
-volumes:
-  grafana_data: {}
-  prometheus_data: {}
-  zipkin_data: {}
+# volumes:
+#   grafana_data: {}
+#   prometheus_data: {}
+#   zipkin_data: {}
 
 networks:
   monitoring:
