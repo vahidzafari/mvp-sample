@@ -23,6 +23,18 @@
       ],
       "@libs/*": [
         "src/libs/*"
+      ],
+      "@domain/*": [
+        "src/domain/*"
+      ],
+      "@application/*": [
+        "src/application/*"
+      ],
+      "@infrastructure/*": [
+        "src/infrastructure/*"
+      ],
+      "@interface/*": [
+        "src/interface/*"
       ]
     }
   }
