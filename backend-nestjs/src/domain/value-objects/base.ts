@@ -3,7 +3,17 @@ export interface DomainPrimitive<T extends Primitives | Date> {
   value: T;
 }
 
-type ValueObjectProps<T> = T extends Primitives | Date ? DomainPrimitive<T> : T;
+export type ValueObjectProps<T> = T extends Primitives | Date
+  ? DomainPrimitive<T>
+  : T;
+
+export interface IValueObject<T> {
+  readonly props: ValueObjectProps<T>;
+  validate(props: ValueObjectProps<T>): void;
+  isValueObject(obj: unknown): obj is ValueObject<unknown>;
+  equals(vo?: ValueObject<T>): boolean;
+  checkIfEmpty(props: ValueObjectProps<T>): void;
+}
 
 export abstract class ValueObject<T> {
   protected readonly props: ValueObjectProps<T>;
@@ -20,7 +30,7 @@ export abstract class ValueObject<T> {
     return obj instanceof ValueObject;
   }
 
-  public equals(vo?: string): boolean {
+  public equals(vo?: ValueObject<T>): boolean {
     if (vo === null || vo === undefined) {
       return false;
     }

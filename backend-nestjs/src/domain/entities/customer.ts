@@ -21,7 +21,7 @@ export type CustomerProperties = CustomerEssentialProperties &
   CustomerOptionalProperties;
 
 export interface ICustomer {
-  compareId: (id: string) => boolean;
+  compareId: (id: UUID) => boolean;
 }
 
 export class CustomerImplement implements ICustomer {
@@ -34,7 +34,7 @@ export class CustomerImplement implements ICustomer {
     Object.assign(this, properties);
   }
 
-  compareId(id: string): boolean {
+  compareId(id: UUID): boolean {
     return this.id.equals(id);
   }
 }

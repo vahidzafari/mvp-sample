@@ -1,4 +1,4 @@
-import { DomainPrimitive, ValueObject, } from './base';
+import { DomainPrimitive, ValueObject } from './base';
 
 export class DateVO extends ValueObject<Date> {
   constructor(value: Date | string | number) {
